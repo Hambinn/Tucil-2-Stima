@@ -30,10 +30,6 @@ def convertToArr(points):
         arr.append([float(points[i][0]),float(points[i][1])])
     return arr
 
-# untuk mencari determinan
-def determinan(x1,x2,x3):
-    return(x1[0]*x2[1]) + (x1[1]*x3[0]) + (x2[0]*x3[1]) - (x3[0]*x2[1]) - (x3[1]*x1[0]) - (x2[0]*x1[1])
-
 # untuk mencari titik maksimum dan minimum
 def findExtreme(points):
     minimum = points[0]
@@ -45,6 +41,10 @@ def findExtreme(points):
         if point[0] >= maximum[0]:
             maximum = point
     return minimum, maximum
+
+# untuk mencari determinan
+def determinan(x1,x2,x3):
+    return(x1[0]*x2[1]) + (x1[1]*x3[0]) + (x2[0]*x3[1]) - (x3[0]*x2[1]) - (x3[1]*x1[0]) - (x2[0]*x1[1])
 
 # untuk membagi hull menjadi set 1 dan set 2 sesuai besar determinan (+ atau -)
 def divide(points,minimum,maximum):
@@ -78,10 +78,11 @@ def hullSet1(points,minimum,maximum,solution):
         return
     else:
         pointmax = pointDistace(points,minimum,maximum)
-        points.remove(pointmax)
         solution.append(pointmax)
+        points.remove(pointmax)
         x1,a = divide(points,minimum,pointmax)
         x2,b = divide(points,pointmax,maximum)
+
         hullSet1(x1,minimum,pointmax,solution)
         hullSet1(x2,pointmax,maximum,solution)
 
@@ -91,9 +92,10 @@ def hullSet2(points,minimum,maximum,solution):
         return
     else:
         pointmax = pointDistace(points,minimum,maximum)
-        points.remove(pointmax)
         solution.append(pointmax)
+        points.remove(pointmax)
         a,x1 = divide(points,minimum,pointmax)
         b,x2 = divide(points,pointmax,maximum)
+        
         hullSet2(x1,minimum,pointmax,solution)
         hullSet2(x2,pointmax,maximum,solution)

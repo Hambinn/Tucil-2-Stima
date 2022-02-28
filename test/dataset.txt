@@ -1,0 +1,1 @@
+dataset yang diuji adalah dataset iris dan dataset wine
